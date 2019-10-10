@@ -6,9 +6,8 @@ import persistence.dao.CustomerDao;
 import persistence.dao.impl.ContactDaoImpl;
 import persistence.dao.impl.CustomerDaoImpl;
 
-import java.io.BufferedReader;
-import java.io.FileReader;
-import java.io.IOException;
+import java.io.*;
+import java.nio.charset.StandardCharsets;
 
 public class CSVProcessor implements FileProcessor {
 
@@ -21,7 +20,10 @@ public class CSVProcessor implements FileProcessor {
     }
 
     public void processFile(String filePath) {
-        try (BufferedReader bufferedReader = new BufferedReader(new FileReader(filePath))) {
+        try (BufferedReader bufferedReader = new BufferedReader(
+                new InputStreamReader(
+                        new FileInputStream(
+                                new File(filePath)), StandardCharsets.UTF_8))) {
             String line;
             while ((line = bufferedReader.readLine()) != null) {
                 String[] rowData = line.split(",");
